@@ -2380,6 +2380,7 @@ out:
   return ret;
 }
 
+#if 0
 static dbus_bool_t
 bus_driver_handle_get_machine_id (DBusConnection *connection,
                                   BusTransaction *transaction,
@@ -2436,6 +2437,7 @@ fail:
   _dbus_string_free (&uuid);
   return FALSE;
 }
+#endif
 
 static dbus_bool_t
 bus_driver_handle_ping (DBusConnection *connection,
@@ -2684,8 +2686,8 @@ static const MessageHandler stats_message_handlers[] = {
 #endif
 
 static const MessageHandler peer_message_handlers[] = {
-  { "GetMachineId", "", "s", bus_driver_handle_get_machine_id,
-    METHOD_FLAG_ANY_PATH },
+//  { "GetMachineId", "", "s", bus_driver_handle_get_machine_id,
+//    METHOD_FLAG_ANY_PATH },
   { "Ping", "", "", bus_driver_handle_ping, METHOD_FLAG_ANY_PATH },
   { NULL, NULL, NULL, NULL }
 };

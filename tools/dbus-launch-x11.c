@@ -94,15 +94,17 @@ static char *
 get_session_file (void)
 {
   static const char prefix[] = "/" DBUS_DIR "/" DBUS_SESSION_BUS_DIR "/";
-  const char *machine;
+//  const char *machine;
   const char *home;
   char *display;
   char *result;
   char *p;
 
+#if 0
   machine = get_machine_uuid ();
   if (machine == NULL)
     return NULL;
+#endif
 
   display = xstrdup (getenv ("DISPLAY"));
   if (display == NULL)
@@ -151,7 +153,7 @@ get_session_file (void)
   
   home = get_homedir ();
   
-  result = malloc (strlen (home) + strlen (prefix) + strlen (machine) +
+  result = malloc (strlen (home) + strlen (prefix) +
                    strlen (display) + 2);
   if (result == NULL)
     {
@@ -162,7 +164,7 @@ get_session_file (void)
 
   strcpy (result, home);
   strcat (result, prefix);
-  strcat (result, machine);
+//  strcat (result, machine);
   strcat (result, "-");
   strcat (result, display);
   free (display);
@@ -234,16 +236,18 @@ init_x_atoms (Display *display)
   static const char pid_prefix[] = "_DBUS_SESSION_BUS_PID";
   static int init = FALSE;
   char *atom_name;
-  const char *machine;
+//  const char *machine;
   char *user_name;
   struct passwd *user;
 
   if (init)
     return TRUE;
 
+#if 0
   machine = get_machine_uuid ();
   if (machine == NULL)
     return FALSE;
+#endif
 
   user = getpwuid (getuid ());
   if (user == NULL)
@@ -253,7 +257,7 @@ init_x_atoms (Display *display)
     }
   user_name = xstrdup(user->pw_name);
 
-  atom_name = malloc (strlen (machine) + strlen (user_name) + 2 +
+  atom_name = malloc (strlen (user_name) + 2 +
                       MAX (strlen (selection_prefix),
                            MAX (strlen (address_prefix),
                                 strlen (pid_prefix))));
@@ -268,7 +272,7 @@ init_x_atoms (Display *display)
   strcpy (atom_name, selection_prefix);
   strcat (atom_name, user_name);
   strcat (atom_name, "_");
-  strcat (atom_name, machine);
+//  strcat (atom_name, machine);
   selection_atom = XInternAtom (display, atom_name, FALSE);
 
   /* create the address property atom */
@@ -415,10 +419,9 @@ set_address_in_file (char *address, pid_t pid, Window wid)
            "# If the DBUS_SESSION_BUS_ADDRESS environment variable is set, it will\n"
            "# be used rather than this file.\n"
            "# See \"man dbus-launch\" for more details.\n"
-           "DBUS_SESSION_BUS_ADDRESS='%s'\n"
+           "DBUS_SESSION_BUS_ADDRESS='0'\n"
            "DBUS_SESSION_BUS_PID=%ld\n"
            "DBUS_SESSION_BUS_WINDOWID=%ld\n",
-           get_machine_uuid (),
            getenv ("DISPLAY"),
            address, (long)pid, (long)wid);
 

@@ -2727,6 +2727,7 @@ static dbus_uint32_t fromAscii(char ascii)
     return 0;    
 }
 
+#if 0
 dbus_bool_t _dbus_read_local_machine_uuid   (DBusGUID         *machine_id,
                                              dbus_bool_t       create_if_not_found,
                                              DBusError        *error)
@@ -2797,6 +2798,7 @@ dbus_bool_t _dbus_read_local_machine_uuid   (DBusGUID         *machine_id,
 #endif
     return TRUE;
 }
+#endif
 
 static
 HANDLE _dbus_global_lock (const char *mutexname)

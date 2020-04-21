@@ -881,7 +881,7 @@ _dbus_read_uuid_file (const DBusString *filename,
 }
 
 /* Protected by _DBUS_LOCK (machine_uuid) */
-static int machine_uuid_initialized_generation = 0;
+//static int machine_uuid_initialized_generation = 0;
 static DBusGUID machine_uuid;
 
 /**
@@ -907,11 +907,13 @@ _dbus_get_local_machine_uuid_encoded (DBusString *uuid_str,
       return FALSE;
     }
 
+#if 0
   if (machine_uuid_initialized_generation != _dbus_current_generation)
     {
       if (!_dbus_read_local_machine_uuid (&machine_uuid, FALSE, error))
         ok = FALSE;
     }
+#endif
 
   if (ok)
     {

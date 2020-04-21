@@ -3328,6 +3328,7 @@ check_existent_ping (BusContext     *context,
 /* returns TRUE if the correct thing happens,
  * but the correct thing may include OOM errors.
  */
+#if 0
 static dbus_bool_t
 check_existent_get_machine_id (BusContext     *context,
                                DBusConnection *connection)
@@ -3416,6 +3417,7 @@ check_existent_get_machine_id (BusContext     *context,
 
   return TRUE;
 }
+#endif
 
 /* returns TRUE if the correct thing happens,
  * but the correct thing may include OOM errors.
@@ -3598,8 +3600,10 @@ check_existent_service_auto_start (BusContext     *context,
   if (!check_existent_ping (context, connection))
     goto out;
 
+#if 0
   if (!check_existent_get_machine_id (context, connection))
     goto out;
+#endif
 
   if (!check_existent_hello_from_self (context, connection))
     goto out;

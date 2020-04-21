@@ -85,6 +85,7 @@ _dbus_get_uuid (const char   *filename,
                 dbus_bool_t   create_if_not_found,
                 DBusError    *error)
 {
+#if 0
   DBusGUID uuid;
   
   if (filename)
@@ -102,6 +103,7 @@ _dbus_get_uuid (const char   *filename,
 
   if (!return_uuid(&uuid, uuid_p, error))
     goto error;
+#endif
 
   return TRUE;
   

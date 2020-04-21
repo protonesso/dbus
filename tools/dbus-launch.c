@@ -92,6 +92,7 @@ extern Display *xdisplay;
  * for the "dbus-launch a test suite in an isolated session" use-case.
  */
 
+#if 0
 static char* machine_uuid = NULL;
 
 const char*
@@ -112,6 +113,7 @@ save_machine_uuid (const char *uuid_arg)
 
   machine_uuid = _dbus_strdup (uuid_arg);
 }
+#endif
 
 #ifdef DBUS_BUILD_X11
 /* Read the machine uuid from file if needed. Returns TRUE if machine_uuid is
@@ -119,6 +121,7 @@ save_machine_uuid (const char *uuid_arg)
 static int
 read_machine_uuid_if_needed (DBusError *error)
 {
+#if 0
   if (machine_uuid != NULL)
     return TRUE;
 
@@ -128,6 +131,8 @@ read_machine_uuid_if_needed (DBusError *error)
     return FALSE;
 
   verbose ("UID: %s\n", machine_uuid);
+  return TRUE;
+#endif
   return TRUE;
 }
 #endif /* DBUS_BUILD_X11 */
@@ -910,7 +915,7 @@ main (int argc, char **argv)
           s = strchr (arg, '=');
           ++s;
 
-          save_machine_uuid (s);
+          //save_machine_uuid (s);
         }
       else if (prev_arg &&
                strcmp (prev_arg, "--autolaunch") == 0)
@@ -923,7 +928,7 @@ main (int argc, char **argv)
           
           autolaunch = TRUE;
 
-          save_machine_uuid (arg);
+          //save_machine_uuid (arg);
 	  requires_arg = FALSE;
         }
       else if (strcmp (arg, "--autolaunch") == 0)
@@ -1021,12 +1026,14 @@ main (int argc, char **argv)
       char *address;
       pid_t pid;
       long wid;
-      
+
+#if 0
       if (get_machine_uuid () == NULL)
         {
           fprintf (stderr, "Machine UUID not provided as arg to --autolaunch\n");
           exit (1);
         }
+#endif
 
       if (!_dbus_string_init (&user_bus))
         tool_oom ("initializing");
@@ -1094,12 +1101,14 @@ main (int argc, char **argv)
       fprintf (stderr, "Session lifetime based on X11 requested, but X11 support not compiled in.\n");
       exit (1);
 #else /* DBUS_BUILD_X11 */
+#if 0
       if (!read_machine_uuid_if_needed (&error))
         {
           fprintf (stderr, "Session lifetime based on X11 requested, but machine UUID unavailable: %s.\n", error.message);
           dbus_error_free (&error);
           exit (1);
         }
+#endif
 
       if (!x11_init ())
         {
@@ -1120,7 +1129,6 @@ main (int argc, char **argv)
       dbus_error_free (&error);
     }
 #endif /* DBUS_BUILD_X11 */
-
 
   if (pipe (bus_pid_to_launcher_pipe) < 0 ||
       pipe (bus_address_to_launcher_pipe) < 0 ||

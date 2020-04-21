@@ -4180,6 +4180,7 @@ _dbus_get_autolaunch_address (const char *scope,
  * @param error the error return
  * @returns #FALSE if the error is set
  */
+#if 0
 dbus_bool_t
 _dbus_read_local_machine_uuid (DBusGUID   *machine_id,
                                dbus_bool_t create_if_not_found,
@@ -4237,6 +4238,7 @@ _dbus_read_local_machine_uuid (DBusGUID   *machine_id,
 
   return _dbus_write_uuid_file (&filename, machine_id, error);
 }
+#endif
 
 /**
  * quries launchd for a specific env var which holds the socket path.
